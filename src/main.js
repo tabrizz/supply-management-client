@@ -27,7 +27,16 @@ import {
   QInput,
   QCard,
   QCardSection,
-  QCardActions
+  QCardActions,
+  QExpansionItem,
+  QTable,
+  QTh,
+  QTr,
+  QTd,
+  QToggle,
+  QMenu,
+  ClosePopup,
+  QSeparator
 } from 'quasar'
 
 import axios from 'axios'
@@ -52,9 +61,20 @@ Vue.use(Quasar, {
     QInput,
     QCard,
     QCardSection,
-    QCardActions
+    QCardActions,
+    QExpansionItem,
+    QTable,
+    QTh,
+    QTr,
+    QTd,
+    QToggle,
+    QMenu,
+    QSeparator
+
   },
-  directives: {},
+  directives: {
+    ClosePopup
+  },
   plugins: {},
   lang: lang
 })

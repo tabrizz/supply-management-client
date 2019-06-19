@@ -14,6 +14,7 @@
               v-model="user.email"
               label="Email *"
               hint="Ingrese su email"
+              color="positive"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Ingrese su email']"
             ></q-input>
@@ -21,12 +22,14 @@
               v-model="user.password"
               label="Contraseña *"
               hint="Ingrese su contraseña"
+              type="password"
+              color="positive"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Ingrese su contraseña']"
             ></q-input>
             <div>
-              <q-btn label="Iniciar Sesión" type="submit" color="primary"/>
-              <q-btn label="Cambiar Contraseña" color="primary" flat class="q-ml-sm"/>
+              <q-btn label="Iniciar Sesión" type="submit" color="positive"/>
+              <q-btn label="Cambiar Contraseña" color="positive" flat class="q-ml-sm"/>
             </div>
           </q-form>
         </q-card-section>
