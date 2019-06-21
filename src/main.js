@@ -36,7 +36,9 @@ import {
   QToggle,
   QMenu,
   ClosePopup,
-  QSeparator
+  QSeparator,
+  QDialog,
+  QChip
 } from 'quasar'
 
 import axios from 'axios'
@@ -69,8 +71,9 @@ Vue.use(Quasar, {
     QTd,
     QToggle,
     QMenu,
-    QSeparator
-
+    QSeparator,
+    QDialog,
+    QChip
   },
   directives: {
     ClosePopup

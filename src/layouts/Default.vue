@@ -39,7 +39,7 @@
 
         <q-item-label header>Principal</q-item-label>
         <q-expansion-item
-          icon="all_inbox"
+          icon="store"
           label="Activos y Suministros"
           header-class="text-white"
           :content-inset-level="0.5"
@@ -60,6 +60,32 @@
             <q-item-section>
               <q-item-label>Activos</q-item-label>
               <q-item-label class="text-grey-6" caption>Listar, Registrar Activos</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-expansion-item>
+
+        <q-expansion-item
+          icon="card_travel"
+          label="Requerimientos y Compras"
+          header-class="text-white"
+          :content-inset-level="0.5"
+        >
+          <q-item :to="{ name: 'requirements'}" exact active-class="text-positive">
+            <q-item-section avatar>
+              <q-icon name="subject"/>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Requerimientos</q-item-label>
+              <q-item-label class="text-grey-6" caption>Listar, Registrar Requerimientos</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item :to="{ name: 'products'}" exact active-class="text-positive">
+            <q-item-section avatar>
+              <q-icon name="shopping_cart"/>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Compras</q-item-label>
+              <q-item-label class="text-grey-6" caption>Listar, Registrar Compras</q-item-label>
             </q-item-section>
           </q-item>
         </q-expansion-item>

@@ -1,48 +1,24 @@
 <template>
   <q-page padding>
+    <div class="row justify-end q-pb-md">
+      <q-btn
+        :to="{ name: 'products-create'}"
+        icon="add"
+        label="Registrar"
+        type="submit"
+        color="positive"
+      />
+    </div>
     <q-table
-      title="Treats"
+      title="Listado de Productos"
       :data="products"
       :columns="columns"
       row-key="id"
-      selection="multiple"
       :selected.sync="selected"
     >
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td auto-width>
-            <q-btn flat round dense icon="more_vert" @click="rowSelected(props.row.id)">
-              <q-menu>
-                <q-list style="min-width: 100px">
-                  <q-item clickable v-close-popup>
-                    <q-item-section>New tab</q-item-section>
-                  </q-item>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>New incognito tab</q-item-section>
-                  </q-item>
-                  <q-separator/>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>Recent tabs</q-item-section>
-                  </q-item>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>History</q-item-section>
-                  </q-item>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>Downloads</q-item-section>
-                  </q-item>
-                  <q-separator/>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>Settings</q-item-section>
-                  </q-item>
-                  <q-separator/>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>Help &amp; Feedback</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </q-td>
-          <q-td key="desc" :props="props">{{ props.row.name }}</q-td>
+          <q-td key="name" :props="props">{{ props.row.name }}</q-td>
           <q-td key="description" :props="props">{{ props.row.description }}</q-td>
           <q-td key="quantity" :props="props">{{ props.row.quantity }}</q-td>
           <q-td key="unit" :props="props">{{ props.row.unit }}</q-td>
@@ -50,6 +26,24 @@
           <q-td key="brand" :props="props">{{ props.row.brand }}</q-td>
           <q-td key="color" :props="props">{{ props.row.color }}</q-td>
           <q-td key="details" :props="props">{{ props.row.details }}</q-td>
+          <q-td auto-width>
+            <q-btn flat round dense icon="more_vert" @click="rowSelected(props.row.id)">
+              <q-menu>
+                <q-list style="min-width: 100px">
+                  <q-item clickable v-close-popup>
+                    <q-item-section>Ver</q-item-section>
+                  </q-item>
+                  <q-item clickable v-close-popup>
+                    <q-item-section>Editar</q-item-section>
+                  </q-item>
+                  <q-separator/>
+                  <q-item clickable v-close-popup>
+                    <q-item-section>Eliminar</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -64,7 +58,7 @@ export default {
       selected: [],
       columns: [
         {
-          name: "desc",
+          name: "name",
           required: true,
           label: "Nombre",
           align: "left",
@@ -86,11 +80,24 @@ export default {
           sortable: true,
           style: "width: 10px"
         },
-        { name: "unit", label: "Unidad", field: "unit" },
-        { name: "model", label: "Modelo", field: "model" },
-        { name: "brand", label: "Marca", field: "brand" },
-        { name: "color", label: "Color", field: "color", sortable: true },
-        { name: "details", label: "Detalles", field: "details", sortable: true }
+        { name: "unit", label: "Unidad", align: "center", field: "unit" },
+        { name: "model", label: "Modelo", align: "center", field: "model" },
+        { name: "brand", label: "Marca", align: "center", field: "brand" },
+        {
+          name: "color",
+          label: "Color",
+          align: "center",
+          field: "color",
+          sortable: true
+        },
+        {
+          name: "details",
+          align: "center",
+          label: "Detalles",
+          field: "details",
+          sortable: true
+        },
+        { name: "options", label: "Opciones" }
       ],
       products: [
         {
