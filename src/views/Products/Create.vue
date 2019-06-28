@@ -92,13 +92,13 @@
               ></q-input>
             </div>
           </div>
+          <div class="row q-mt-xs q-gutter-md justify-end">
+            <q-btn icon="save" label="Registrar" type="submit" color="positive"/>
+            <q-btn :to="{ name: 'products'}" icon="cancel" label="Cancelar" color="positive" flat/>
+          </div>
         </q-form>
       </q-card-section>
     </q-card>
-    <div class="row q-mt-xs q-gutter-md justify-end">
-      <q-btn icon="save" label="Registrar" type="submit" color="positive"/>
-      <q-btn :to="{ name: 'products'}" icon="cancel" label="Cancelar" color="positive" flat/>
-    </div>
   </q-page>
 </template>
 

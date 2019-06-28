@@ -39,7 +39,8 @@ import {
   QSeparator,
   QDialog,
   QChip,
-  QCheckbox
+  QCheckbox,
+  QMarkupTable
 } from 'quasar'
 
 import axios from 'axios'
@@ -75,7 +76,8 @@ Vue.use(Quasar, {
     QSeparator,
     QDialog,
     QChip,
-    QCheckbox
+    QCheckbox,
+    QMarkupTable
   },
   directives: {
     ClosePopup

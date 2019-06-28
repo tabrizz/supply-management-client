@@ -7,7 +7,7 @@
           <div class="row q-gutter-sm">
             <div class="col">
               <q-input
-                v-model="user.email"
+                v-model="product.name"
                 label="Nombre *"
                 color="positive"
                 lazy-rules
@@ -18,7 +18,7 @@
             <div class="col">
               <q-input
                 color="positive"
-                v-model="user.password"
+                v-model="product.description"
                 label="Descripción *"
                 lazy-rules
                 dense
@@ -28,7 +28,7 @@
             <div class="col">
               <q-input
                 color="positive"
-                v-model="user.password"
+                v-model="product.quantity"
                 label="Cantidad *"
                 lazy-rules
                 dense
@@ -39,7 +39,7 @@
           <div class="row q-gutter-sm">
             <div class="col">
               <q-input
-                v-model="user.email"
+                v-model="product.unit"
                 label="Unidad *"
                 color="positive"
                 lazy-rules
@@ -50,7 +50,7 @@
             <div class="col">
               <q-input
                 color="positive"
-                v-model="user.password"
+                v-model="product.model"
                 label="Modelo *"
                 lazy-rules
                 dense
@@ -60,7 +60,7 @@
             <div class="col">
               <q-input
                 color="positive"
-                v-model="user.password"
+                v-model="product.brand"
                 label="Marca *"
                 lazy-rules
                 dense
@@ -71,7 +71,7 @@
           <div class="row q-gutter-sm">
             <div class="col-md-2">
               <q-input
-                v-model="user.email"
+                v-model="product.color"
                 label="Color *"
                 color="positive"
                 lazy-rules
@@ -82,7 +82,7 @@
             <div class="col">
               <q-input
                 color="positive"
-                v-model="user.password"
+                v-model="product.details"
                 label="Detalles *"
                 lazy-rules
                 dense
@@ -93,12 +93,13 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancelar" color="positive" v-close-popup/>
-          <q-btn flat label="Agregar Producto" color="positive" v-close-popup/>
+          <q-btn flat label="Cancelar" @click="cleanDialog" color="positive" v-close-popup/>
+          <q-btn flat label="Agregar Producto" @click="addProduct" color="positive" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
     <!--end of dialog to add products-->
+
     <div class="row justify-end q-pb-md">
       <q-btn
         icon="add"
@@ -115,7 +116,7 @@
       <q-card-section>
         <q-form @submit="onSubmit" class="q-gutter-sm">
           <div class="row q-gutter-sm">
-            <div class="col-md-8">
+            <div class="col-8">
               <q-input
                 v-model="requirement.description"
                 label="Descripción *"
@@ -141,131 +142,118 @@
               ></q-input>
             </div>
           </div>
+          <q-markup-table>
+            <thead>
+              <tr>
+                <th class="text-left">Nombre</th>
+                <th class="text-right">Descripción</th>
+                <th class="text-right">Cantidad</th>
+                <th class="text-right">Unidad</th>
+                <th class="text-right">Modelo</th>
+                <th class="text-right">Marca</th>
+                <th class="text-right">Color</th>
+                <th class="text-right">Detalles</th>
+                <th class="text-right">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(product, i) in requirement.products" :key="product.name+i">
+                <td class="text-left">{{ product.name }}</td>
+                <td class="text-right">{{ product.description }}</td>
+                <td class="text-right">{{ product.quantity }}</td>
+                <td class="text-right">{{ product.unit }}</td>
+                <td class="text-right">{{ product.model }}</td>
+                <td class="text-right">{{ product.brand }}</td>
+                <td class="text-right">{{ product.color }}</td>
+                <td class="text-right">{{ product.details }}</td>
+                <td class="text-right">
+                  <q-btn flat round dense icon="more_vert">
+                    <q-menu>
+                      <q-list style="min-width: 100px">
+                        <q-item clickable v-close-popup>
+                          <q-item-section @click="removeProduct(i)">Eliminar</q-item-section>
+                        </q-item>
+                      </q-list>
+                    </q-menu>
+                  </q-btn>
+                </td>
+              </tr>
+            </tbody>
+          </q-markup-table>
+          <div class="row q-mt-xs q-gutter-md justify-end">
+            <q-btn icon="save" label="Registrar" type="submit" color="positive"/>
+            <q-btn
+              :to="{ name: 'requirements'}"
+              icon="cancel"
+              label="Cancelar"
+              color="positive"
+              flat
+            />
+          </div>
         </q-form>
       </q-card-section>
     </q-card>
-    <q-table
-      title="Listado de Productos"
-      :data="products"
-      :columns="columns"
-      row-key="id"
-      :selected.sync="selected"
-    >
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td key="name" :props="props">{{ props.row.name }}</q-td>
-          <q-td key="description" :props="props">{{ props.row.description }}</q-td>
-          <q-td key="quantity" :props="props">{{ props.row.quantity }}</q-td>
-          <q-td key="unit" :props="props">{{ props.row.unit }}</q-td>
-          <q-td key="model" :props="props">{{ props.row.model }}</q-td>
-          <q-td key="brand" :props="props">{{ props.row.brand }}</q-td>
-          <q-td key="color" :props="props">{{ props.row.color }}</q-td>
-          <q-td key="details" :props="props">{{ props.row.details }}</q-td>
-          <q-td auto-width>
-            <q-btn flat round dense icon="more_vert" @click="rowSelected(props.row.id)">
-              <q-menu>
-                <q-list style="min-width: 100px">
-                  <q-item clickable v-close-popup>
-                    <q-item-section>Ver</q-item-section>
-                  </q-item>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>Editar</q-item-section>
-                  </q-item>
-                  <q-separator/>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>Eliminar</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
-    <div class="row q-mt-xs q-gutter-md justify-end">
-      <q-btn icon="save" label="Registrar" type="submit" color="positive"/>
-      <q-btn :to="{ name: 'products'}" icon="cancel" label="Cancelar" color="positive" flat/>
-    </div>
+
+    <pre>{{ $data.requirement }}</pre>
   </q-page>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "login",
   data() {
     return {
       confirm: false,
-      user: {
-        email: null,
-        password: null
-      },
       requirement: {
         description: "",
         notes: "",
-        approved: false
+        approved: false,
+        products: []
       },
-      columns: [
-        {
-          name: "name",
-          required: true,
-          label: "Nombre",
-          align: "left",
-          field: row => row.name,
-          format: val => `${val}`,
-          sortable: true
-        },
-        {
-          name: "description",
-          align: "center",
-          label: "Descripción",
-          field: "description",
-          sortable: true
-        },
-        {
-          name: "quantity",
-          label: "Cantidad",
-          field: "quantity",
-          sortable: true,
-          style: "width: 10px"
-        },
-        { name: "unit", label: "Unidad", align: "center", field: "unit" },
-        { name: "model", label: "Modelo", align: "center", field: "model" },
-        { name: "brand", label: "Marca", align: "center", field: "brand" },
-        {
-          name: "color",
-          label: "Color",
-          align: "center",
-          field: "color",
-          sortable: true
-        },
-        {
-          name: "details",
-          align: "center",
-          label: "Detalles",
-          field: "details",
-          sortable: true
-        },
-        { name: "options", label: "Opciones" }
-      ],
-      products: []
+      product: {
+        name: "",
+        description: "",
+        quantity: null,
+        unit: "",
+        model: "",
+        brand: "",
+        color: "",
+        details: ""
+      }
     };
   },
   methods: {
     onSubmit() {
-      this.$store
-        .dispatch("login", this.user)
-        .then(res => {
-          if (res.status === 200) {
-            this.$router.push("/logistics");
-          } else {
-          }
-        })
-        .catch(err => {});
+      // axios
+      //   .post(VUE_APP_URL_API + "/api/requirements")
+      //   .then(res => {
+      //     if (res.status === 200) {
+      // this.$router.push({ name: "requirements" });
+      //     } else {
+      //     }
+      //   })
+      //   .catch(err => {});
     },
-    onReset() {},
-    rowSelected(productId) {
-      console.log("toggle");
-      console.log(productId);
+    cleanDialog() {
+      this.product = {
+        name: "",
+        description: "",
+        quantity: null,
+        unit: "",
+        model: "",
+        brand: "",
+        color: "",
+        details: ""
+      };
+    },
+    addProduct() {
+      this.requirement.products.push(this.product);
+      this.cleanDialog();
+    },
+    removeProduct(i) {
+      this.requirement.products.splice(i, 1);
     }
   }
 };
